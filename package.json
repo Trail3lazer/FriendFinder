@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Trail3lazer/FriendFinder/issues"
   },
-  "homepage": "https://github.com/Trail3lazer/FriendFinder#readme"
+  "homepage": "https://github.com/Trail3lazer/FriendFinder#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
