@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>FRIEND FINDER</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <form id='form' action="/api/friends" method="post">
+        <button type="button" class="btn btn-success" action="submit">Submit</button>
+    </form>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        console.log("pass")
+        var questions = [
+            'You enjoy vibrant social events with lots of people.',
+            'You often spend time exploring unrealistic yet intriguing ideas.',
+            'Your travel plans are more likely to look like a rough list of ideas than a detailed itinerary.',
+            'You often think about what you should have said in a conversation long after it has taken place.',
+            'If your friend is sad about something, your first instinct is to support them emotionally, not try to solve their problem.',
+            'People can rarely upset you.',
+            'You often rely on other people to be the ones to start a conversation and keep it going.',
+            'If you have to temporarily put your plans on hold, you make sure it is your top priority to get back on track as soon as possible.',
+            'You rarely worry if you made a good impression on someone you met.',
+            'It would be a challenge for you to spend the whole weekend all by yourself without feeling bored.',
+            'You are more of a detail-oriented than a big picture person.',
+            'You are very affectionate with people you care about.',
+            'You have a careful and methodical approach to life.',
+            'You are still bothered by the mistakes you made a long time ago.'
+        ]
+
+        for (i in questions) {
+            $("#form").prepend(
+                `<fieldset id="group${i}">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">${questions[i]}</h4>
+                    <hr>
+                <p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-1" value="1">
+                    <label class="form-check-label" for="inlineRadio1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-2" value="2">
+                    <label class="form-check-label" for="inlineRadio2">2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-3" value="3">
+                    <label class="form-check-label" for="inlineRadio3">3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-4" value="4">
+                    <label class="form-check-label" for="inlineRadio4">4</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-5" value="5">
+                    <label class="form-check-label" for="inlineRadio5">5</label>
+                </div>
+                </p>
+                </div>
+                </fieldset`
+            )
+        }</script>
+</body>
+
+</html>
