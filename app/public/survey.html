@@ -13,9 +13,13 @@
 </head>
 
 <body>
-    <form id='form' action="/api/friends" method="post">
-        <button type="button" class="btn btn-success" action="submit">Submit</button>
-    </form>
+    <div class="container">
+        <form id='form' method="post" role='form'>
+
+            <button type="submit" class="btn btn-success" action="submit" id="submitBtn"><i class="fa fa-search"
+                    aria-hidden="true"></i> Submit</button>
+        </form>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -27,6 +31,27 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
+        $("#submitBtn").click((e) => {
+            e.preventDefault();
+            var friend = {
+                name: $(`#Name`).val(),
+                age: $(`#Age`).val(),
+                picture: $(`#Picture`).val()
+            };
+            var formData = [];
+            for (i in questions) {
+                for (let j = 1; j < 6; j++) {
+                    let radio = $(`#group${i}-radio${j}`)
+                    if (radio[0].checked) { formData.push(parseInt($(radio).val())) }
+                }
+            }
+            friend.stats = formData;
+            $.post("/api/friends", friend, (data) => {
+                if (data) { console.log("Saved")}
+                else { console.log("error") }
+            })
+
+        })
         console.log("pass")
         var questions = [
             'You enjoy vibrant social events with lots of people.',
@@ -46,37 +71,36 @@
         ]
 
         for (i in questions) {
-            $("#form").prepend(
-                `<fieldset id="group${i}">
-                <div class="alert alert-info" role="alert">
-                    <h4 class="alert-heading">${questions[i]}</h4>
-                    <hr>
-                <p>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-1" value="1">
-                    <label class="form-check-label" for="inlineRadio1">1</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-2" value="2">
-                    <label class="form-check-label" for="inlineRadio2">2</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-3" value="3">
-                    <label class="form-check-label" for="inlineRadio3">3</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-4" value="4">
-                    <label class="form-check-label" for="inlineRadio4">4</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="group${i}" id="${i}-5" value="5">
-                    <label class="form-check-label" for="inlineRadio5">5</label>
-                </div>
-                </p>
-                </div>
-                </fieldset`
-            )
-        }</script>
+            var newQuestion = $(`<fieldset id="group${i}">`)
+            var newAlert = $(`<div class="alert alert-info" role="alert">`)
+            $(newAlert).append(`<h4 class="alert-heading">${questions[i]}</h4><hr>`);
+            for (let j = 1; j < 6; j++) {
+                $(newAlert).append(
+                    `<div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="group${i}" id="group${i}-radio${j}" value="${j}">
+                    <label class="form-check-label">${j}</label>
+                </div>`
+                );
+            };
+            $(newQuestion).append(newAlert)
+            $("#form").prepend(newQuestion)
+        };
+        var newQuestion = $(`<fieldset id="infoGroup">`)
+        var newAlert = $(`<div class="alert alert-warning" role="alert">`)
+        $(newAlert).append(`<h4 class="alert-heading">Please add some info so you can be found.</h4><hr>`);
+        var info = ['Name', 'Age', 'Picture']
+        for (i in info) {
+            $(newAlert).append(
+                `<div class="form-group">
+                    <label for="${info[i]}">${info[i]}</label>
+                    <input type="text" class="form-control" id="${info[i]}" placeholder="${info[i]}">
+                </div>`
+                );
+        };
+        $(newQuestion).append(newAlert)
+        $("#form").prepend(newQuestion)
+            
+    </script>
 </body>
 
 </html>

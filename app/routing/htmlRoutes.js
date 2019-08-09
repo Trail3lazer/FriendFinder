@@ -8,4 +8,4 @@ app.get('/', (req, res) => {
 })
 }
 
-export default exp
+module.exports = exp
