@@ -30,7 +30,7 @@ app.post('/api/friends', (req, res) => {
             bestFriend.obj = dude};
     };
     bestFriend = bestFriend.obj;
-    //friends.push(newFriend);
     res.json(bestFriend);
+    friends.push(newFriend);
 })
 };

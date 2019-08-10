@@ -133,31 +133,31 @@
             $("#form").prepend(newQuestion)
         };
 
-        //-------------IF I WANT TO LET USERS ADD MORE FRIENDS TO FIND----------//
-        //------------------------ALSO CHANGE apiRoutes.js----------------------//
+        // -------------IF I WANT TO LET USERS ADD MORE FRIENDS TO FIND----------//
+        // ------------------------ALSO CHANGE apiRoutes.js----------------------//
 
-        // var newQuestion = $(`<fieldset id="infoGroup">`)
-        // var newAlert = $(`<div class="alert alert-warning pt-4" role="alert">`)
-        // $(newAlert).append(`<h4 class="alert-heading">Please add some info so you can be found.</h4><hr>`);
-        // var info = ['Name', 'Age', 'Picture']
-        // for (i in info) {
-        //     if (info[i]==="Picture"){ 
-        //         $(newAlert).append(
-        //         `<div class="form-group">
-        //             <label for="${info[i]}">${info[i]}</label>
-        //             <input type="text" class="form-control" id="${info[i]}" placeholder="URL">
-        //         </div>`
-        //         );}
-        //     else {
-        //         $(newAlert).append(
-        //         `<div class="form-group">
-        //             <label for="${info[i]}">${info[i]}</label>
-        //             <input type="text" class="form-control" id="${info[i]}" placeholder="${info[i]}">
-        //         </div>`
-        //         );
-        // }};
-        // $(newQuestion).append(newAlert)
-        // $("#form").prepend(newQuestion)
+        var newQuestion = $(`<fieldset id="infoGroup">`)
+        var newAlert = $(`<div class="alert alert-warning pt-4" role="alert">`)
+        $(newAlert).append(`<h4 class="alert-heading">Please add some info so you can be found.</h4><hr>`);
+        var info = ['Name', 'Age', 'Picture']
+        for (i in info) {
+            if (info[i]==="Picture"){ 
+                $(newAlert).append(
+                `<div class="form-group">
+                    <label for="${info[i]}">${info[i]}</label>
+                    <input type="text" class="form-control" id="${info[i]}" placeholder="URL">
+                </div>`
+                );}
+            else {
+                $(newAlert).append(
+                `<div class="form-group">
+                    <label for="${info[i]}">${info[i]}</label>
+                    <input type="text" class="form-control" id="${info[i]}" placeholder="${info[i]}">
+                </div>`
+                );
+        }};
+        $(newQuestion).append(newAlert)
+        $("#form").prepend(newQuestion)
     }
     ask()
 
