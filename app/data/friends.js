@@ -44,6 +44,11 @@ var friends = [
         age: "34",
         picture:'https://d13ezvd6yrslxm.cloudfront.net/wp/wp-content/images/tomclancy-jimryan-mashup-700x362.jpg',
         stats: [2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+    },{ 
+    name: 'Jared',
+    age: '23',
+    picture:'https://miro.medium.com/fit/c/256/256/1*fz8ugIyrp4UB-ZRr0QqmpQ@2x.jpeg',
+    stats: [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
     }
 ]
 

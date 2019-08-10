@@ -9,19 +9,18 @@ app.get('/api/friends', (req, res) => {
 app.post('/api/friends', (req, res) => {
     var newFriend = req.body;
     let bestFriend = {
-        dif = 100,
-        obj
+        dif: 100
     };
     for (i in friends){
         let dude = friends[i];
         let dudeTotal = 0;
         let friendTotal = 0;
-        let dif;
+        let dif = 101;
         for (idx in dude.stats){
-            dudeTotal += dude.stats[idx];
-            friendTotal += friend.stats[idx];
+            dudeTotal += parseInt(dude.stats[idx]);
+            friendTotal += parseInt(newFriend.stats[idx]);
         };
-        if(dudeTotal===friendTotal){
+        if(dudeTotal === friendTotal && dude !== newFriend){
             bestFriend.dif = 0;
             bestFriend.obj = dude}
         else if (dudeTotal>friendTotal){dif = dudeTotal-friendTotal}
@@ -31,7 +30,7 @@ app.post('/api/friends', (req, res) => {
             bestFriend.obj = dude};
     };
     bestFriend = bestFriend.obj;
-    friends.push(newFriend);
+    //friends.push(newFriend);
     res.json(bestFriend);
 })
 };

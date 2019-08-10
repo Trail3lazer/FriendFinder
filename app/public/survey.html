@@ -13,13 +13,39 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand navbar-light bg-light mb-3">
+        <div class="nav navbar-nav">
+            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="/survey">Survey</a>
+        </div>
+        <div class="navbar-brand ml-auto">FRIENDFINDER2.0</div>
+    </nav>
+
     <div class="container">
         <form id='form' method="post" role='form'>
 
-            <button type="submit" class="btn btn-success" action="submit" id="submitBtn"><i class="fa fa-search"
+            <button type="submit" class="btn btn-primary mb-4" action="submit" id="submitBtn"><i class="fa fa-search"
                     aria-hidden="true"></i> Submit</button>
         </form>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">New Friend</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" id='modalCloseBtn' data-dismiss="modal">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -31,6 +57,20 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
+    //------RESET AFTER MODAL----////
+        $("#modalCloseBtn").click(()=>{
+            $(`#Name`).val('');
+            $(`#Age`).val('');
+            $(`#Picture`).val('');
+            $(".modal-body").empty();
+            for (i in questions) {
+                for (let j = 1; j < 6; j++) {
+                    let radio = $(`#group${i}-radio${j}`);
+                    if (radio[0].checked) {radio[0].checked = false};
+                }
+            };
+        });
+////-------------Friend finder logic--------/////
         $("#submitBtn").click((e) => {
             e.preventDefault();
             var friend = {
@@ -47,11 +87,18 @@
             }
             friend.stats = formData;
             $.post("/api/friends", friend, (data) => {
-                if (data) { console.log("Saved")}
-                else { console.log("error") }
-            })
+                if (data) { console.log("Saved");
+                    var jumbo = $(`<div class="container">`);
+                    $(jumbo).append(`
+                        <p class="lead"><img class="mx-auto img-fluid" src=${data.picture}></p>
+                        <h1 class="display-3">${data.name}</h1><h1 class="display-4">Age: ${data.age}</h1>`
+                    );
+                    $(`.modal-body`).append(jumbo);
+                    $('#myModal').modal('toggle');
+                } else { console.log("error") };
+            });
 
-        })
+        });
         console.log("pass")
         var questions = [
             'You enjoy vibrant social events with lots of people.',
@@ -69,7 +116,7 @@
             'You have a careful and methodical approach to life.',
             'You are still bothered by the mistakes you made a long time ago.'
         ]
-
+        var ask = () => {
         for (i in questions) {
             var newQuestion = $(`<fieldset id="group${i}">`)
             var newAlert = $(`<div class="alert alert-info" role="alert">`)
@@ -85,21 +132,39 @@
             $(newQuestion).append(newAlert)
             $("#form").prepend(newQuestion)
         };
-        var newQuestion = $(`<fieldset id="infoGroup">`)
-        var newAlert = $(`<div class="alert alert-warning" role="alert">`)
-        $(newAlert).append(`<h4 class="alert-heading">Please add some info so you can be found.</h4><hr>`);
-        var info = ['Name', 'Age', 'Picture']
-        for (i in info) {
-            $(newAlert).append(
-                `<div class="form-group">
-                    <label for="${info[i]}">${info[i]}</label>
-                    <input type="text" class="form-control" id="${info[i]}" placeholder="${info[i]}">
-                </div>`
-                );
-        };
-        $(newQuestion).append(newAlert)
-        $("#form").prepend(newQuestion)
-            
+
+        //-------------IF I WANT TO LET USERS ADD MORE FRIENDS TO FIND----------//
+        //------------------------ALSO CHANGE apiRoutes.js----------------------//
+
+        // var newQuestion = $(`<fieldset id="infoGroup">`)
+        // var newAlert = $(`<div class="alert alert-warning pt-4" role="alert">`)
+        // $(newAlert).append(`<h4 class="alert-heading">Please add some info so you can be found.</h4><hr>`);
+        // var info = ['Name', 'Age', 'Picture']
+        // for (i in info) {
+        //     if (info[i]==="Picture"){ 
+        //         $(newAlert).append(
+        //         `<div class="form-group">
+        //             <label for="${info[i]}">${info[i]}</label>
+        //             <input type="text" class="form-control" id="${info[i]}" placeholder="URL">
+        //         </div>`
+        //         );}
+        //     else {
+        //         $(newAlert).append(
+        //         `<div class="form-group">
+        //             <label for="${info[i]}">${info[i]}</label>
+        //             <input type="text" class="form-control" id="${info[i]}" placeholder="${info[i]}">
+        //         </div>`
+        //         );
+        // }};
+        // $(newQuestion).append(newAlert)
+        // $("#form").prepend(newQuestion)
+    }
+    ask()
+
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+    
     </script>
 </body>
 
